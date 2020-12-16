@@ -7,7 +7,8 @@ from fastapi import FastAPI, HTTPException
 api = FastAPI()
 
 from fastapi.middleware.cors import CORSMiddleware
-origins=["http://localhost","http://localhost:8080","https://dummy-hotel-front.herokuapp.com/"]
+origins=["http://localhost","http://localhost:8080","https://dummy-hotel-front.herokuapp.com",
+"http://localhost.tiangolo.com","https://localhost.tiangolo.com",]
 
 api.add_middleware(
     CORSMiddleware,allow_origins=origins,allow_credentials=True,
