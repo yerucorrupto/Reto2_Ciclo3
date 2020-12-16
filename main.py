@@ -6,6 +6,13 @@ from fastapi import FastAPI, HTTPException
 
 api = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+origins=["http://localhost","http://localhost:8080","https://dummy-hotel-front.herokuapp.com/"]
+
+api.add_middleware(
+    CORSMiddleware,allow_origins=origins,allow_credentials=True,
+    allow_methods=["*"],allow_headers=["*"],)
+
 @api.post("/hacer_reserva/")
 async def hacer_reserva(reserva: ReservaIn):
 	resultado = buscarDisponibilidad(reserva)
@@ -13,7 +20,7 @@ async def hacer_reserva(reserva: ReservaIn):
 		return save_reserva(reserva)
 	else:
 		raise HTTPException(status_code=400,
-							detail="No se encuentra disponibilidad para esas fechas")
+			detail="No se encuentra disponibilidad para esas fechas")
 
 @api.get("/buscar-reserva/{idBuscado}")
 async def buscar_reserva(idBuscado: int):
