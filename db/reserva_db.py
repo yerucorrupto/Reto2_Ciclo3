@@ -63,3 +63,13 @@ def buscarDisponibilidad(reserva: ReservaInDB):
 			disponible = True
 		else: return False
 	return disponible
+
+#Diciembre 19/2020:
+#Vamos a crear un método que nos ayuda a procesar peticiones tipo PUT
+#Es decir, para poder actualizar los datos de una reserva
+def actualizarReserva(reserva: ReservaInDB):
+	database_reservas[reserva.idReserva].FechaIngreso = reserva.FechaIngreso
+	database_reservas[reserva.idReserva].FechaSalida = reserva.FechaSalida
+	database_reservas[reserva.idReserva].NumPersonas = reserva.NumPersonas
+	database_reservas[reserva.idReserva].Celular = reserva.Celular
+	return reserva

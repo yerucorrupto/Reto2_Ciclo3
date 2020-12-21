@@ -1,6 +1,6 @@
 from db.reserva_db import ReservaInDB
 from models.reserva_models import ReservaIn,ReservaOut
-from db.reserva_db import save_reserva,getInfoReserva,buscarDisponibilidad
+from db.reserva_db import save_reserva,getInfoReserva,buscarDisponibilidad,actualizarReserva
 import datetime
 from fastapi import FastAPI, HTTPException
 
@@ -30,3 +30,17 @@ async def buscar_reserva(idBuscado: int):
 		return resultado
 	else:
 		raise HTTPException(status_code=404, detail="La reserva no existe.")
+
+#Diciembre 19/2020: vamos a crear una petición de tipo PUT
+@api.put("/modificar-reserva/")
+async def modificar_reserva(reserva: ReservaInDB):
+	resultado = getInfoReserva(reserva.idReserva)
+	if resultado==None:
+		raise HTTPException(status_code=404,
+			detail="La reserva que intentas modificar no existe.")
+	else:
+		if (resultado.NroDocum!=reserva.NroDocum) or (resultado.Nombre!=reserva.Nombre):
+			raise HTTPException(status_code=404,
+				detail="No puedes modificar tus datos personales")
+		else:
+			return actualizarReserva(reserva)
